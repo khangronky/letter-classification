@@ -1,0 +1,120 @@
+Deep Learning Project 1 — Assignment Specification
+
+1) Overview
+
+You are provided with a custom dataset containing 30,000 labelled images across nine pattern classes. Your task is to design, train, evaluate, and justify a deep learning classifier using Keras with the TensorFlow backend.
+
+The dataset may contain irrelevant or incorrectly labelled images, reflecting imperfections in data collection. You should investigate the data and use systematic experimentation to support your modelling decisions.
+
+This is an individual assessment. You must submit a trained model, a reduced notebook, and a report. Your work will be assessed according to the rubric provided on Canvas.
+
+Due date: 11:59 PM, Wednesday, December 9, 2026 (Vietnam time).
+
+2) Files You Will Receive
+
+- project1_instructions.md and project1_instructions.txt: these assignment instructions in Markdown and plain-text formats. Both contain the same content.
+- student_dataset.npz: the labelled dataset, containing:
+  - images: shape (30000, 32, 32), dtype float32. Each sample is a single-channel image with values in [0, 1].
+  - labels: shape (30000,), containing string labels from {a, b, c, d, e, f, g, h, k}.
+
+There is no predefined training/validation split. You must create and document your own split(s), using validation data to guide model selection.
+
+Your submitted model will be evaluated on a separate, private instructor_dataset.npz file with the same fields, image dimensions, data types, and label set. The number of samples may differ.
+
+3) Submission Guidelines
+
+Submit the following three files, replacing <student_id> with your student ID, for example, s1234567.
+
+A. Trained Model — <student_id>_project1_model.keras
+
+Submit your final trained model in .keras format. It must load successfully using Cell 2 of your reduced notebook.
+
+Include any learned preprocessing parameters within the saved model so that evaluation does not require additional files or access to the training data.
+
+B. Reduced Notebook — <student_id>_project1_reduced_notebook.ipynb
+
+The reduced notebook must contain exactly three code cells. The academic honesty statement and short section headings may appear in Markdown cells. All methodological explanations and experimental discussion belong in the report.
+
+- Cell 1 — Define and Train: Include all imports, definitions, and code required to load student_dataset.npz, preprocess the data, define and train your final model, and assign it to the variable model. Define the prediction function specified below.
+- Cell 2 — Load the Saved Model: Include all imports and definitions required to load your submitted .keras file into the variable model. Define the same prediction function. This cell must run without executing Cell 1 or accessing student_dataset.npz.
+- Cell 3 — Predict and Evaluate: Load instructor_dataset.npz, call predict_fn on its images, and report classification accuracy against its labels. Do not train, tune, or fit preprocessing on the instructor dataset.
+
+All required files will be placed in the same directory as the notebook. Your notebook must run from this directory without changes to file paths.
+
+The notebook must support both execution paths, each starting from a fresh kernel:
+
+- Primary evaluation of the submitted model: Cell 2 → Cell 3.
+- Reproducibility check through training from scratch: Cell 1 → Cell 3.
+
+Cells 1 and 2 must run independently of each other. Each must provide all imports, definitions, and variables needed by Cell 3. Cell 3 must work unchanged in both paths.
+
+Each of Cells 1 and 2 must define:
+
+def predict_fn(X32x32: np.ndarray) -> np.ndarray:
+    ...
+
+This function must:
+
+- Accept images of shape (N, 32, 32), dtype float32, with values in [0, 1].
+- Apply all preprocessing required by the model.
+- Return a NumPy string array of shape (N,), containing predicted letter labels from {a, b, c, d, e, f, g, h, k}.
+- Convert model outputs to the correct letter labels using the same class mapping in both execution paths.
+- Perform prediction without updating model weights or preprocessing parameters.
+
+The model trained in Cell 1 must use the final configuration documented in your report. Its performance should be comparable to that of the submitted model; identical results are not required where training is nondeterministic.
+
+C. Report — <student_id>_project1_report.pdf
+
+Submit a PDF export of your full experimental notebook, not exceeding 30 A4 pages in total. Follow the content requirements in Section 4.
+
+The full experimental notebook is the source of the report; it is not an additional submission file.
+
+4) Report Requirements
+
+Your report must clearly present the following:
+
+- Objective and Approach: Introduce the classification task and summarise your proposed solution.
+- Dataset Inspection: Examine image examples, value ranges, class distribution, and potential data-quality issues.
+- Validation and Preprocessing: Describe and justify your training/validation split(s), random seeds, and preprocessing choices. Explain how you prevent data leakage.
+- Model Architecture: Describe and justify your model type, layers, and sizes. Report the number of parameters.
+- Training Methodology: Explain your choices of activation functions, loss function, optimiser, and regularisation, connecting them to relevant theory.
+- Experiments and Results: Compare the approaches you tried, including a baseline. Present relevant learning curves and explain how the evidence informed your final model selection.
+- Evaluation and Error Analysis: Report validation performance, examine misclassifications, and discuss computational efficiency. State the hardware and measurement procedure for any reported execution times.
+- Reflection and Reproducibility: Discuss limitations, possible improvements, and key insights. Record random seeds, Python and package versions, and execution details needed to reproduce your results.
+- Sources and Acknowledgements: Cite external code, pretrained models, and other materials, and disclose AI use as required by the course.
+
+Write explanations in Markdown cells and support them with relevant code, figures, tables, and outputs. Remove unnecessary logs and repetitive content. Ensure that code and figures remain legible in the exported PDF.
+
+5) Allowed Libraries and Environment Rules
+
+- Framework: Use Keras with the TensorFlow backend. Other deep learning frameworks or backends, including PyTorch and JAX, are not permitted.
+- Supporting Libraries: NumPy, Matplotlib, pandas, scikit-learn, seaborn, and similar standard scientific Python packages are permitted.
+- Environment: The reduced notebook must run without manual package installation or configuration by the instructor. Document the required Python and package versions in your report.
+- Additional Dependencies: Lightweight package installation within the notebook is permitted where necessary and must be clearly identified. Cells 1 and 2 must each independently handle the dependencies required for their execution path.
+- Internet Access: Internet use is permitted. Any downloads required during execution must be documented and automated.
+- Pretrained Models: These are permitted if you cite their source, justify their suitability, and provide all required code. The submitted .keras file must contain the trained weights needed for evaluation.
+- External Datasets: Do not use external datasets for training or validation, or download them during execution. Pretrained weights are permitted under the conditions above.
+
+6) Academic Honesty Statement
+
+Include the following statement at the beginning of your report and in a Markdown cell at the top of your reduced notebook:
+
+I declare that this submission is my own work. I have acknowledged all sources of code, pretrained models, and other materials, and disclosed any use of AI tools in accordance with the course requirements.
+
+7) Assessment Criteria
+
+Your submission will be assessed using the rubric provided on Canvas.
+
+8) Final Submission Checklist
+
+Before uploading your files:
+
+- Verify both execution paths specified in Section 3, starting from a fresh kernel for each.
+- For local testing of Cell 3, copy student_dataset.npz and rename the copy to instructor_dataset.npz. This checks execution only; accuracy on this copy must not be presented as independent validation performance.
+- Confirm that Cell 3 loads instructor_dataset.npz and works without manual code changes.
+- Confirm that the saved model, reduced notebook, and report describe the same final approach.
+- Check that the PDF is legible and does not exceed 30 A4 pages.
+
+Upload exactly the three files specified in Section 3 to Canvas. Do not include dataset files or submit a ZIP archive unless specifically requested.
+
+Late submissions are subject to the standard university policy.
