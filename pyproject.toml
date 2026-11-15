@@ -3,7 +3,7 @@ name = "letter-classification"
 version = "0.1.0"
 description = ""
 readme = "README.md"
-requires-python = ">=3.12,<3.14"
+requires-python = ">=3.13,<3.14"
 dependencies = [
     "jupyter",
     "numpy",
@@ -13,4 +13,5 @@ dependencies = [
     "matplotlib",
     "seaborn",
     "scikit-learn",
+    "tensorflow",
 ]
