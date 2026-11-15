@@ -1,0 +1,16 @@
+[project]
+name = "letter-classification"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "jupyter",
+    "numpy",
+    "pandas",
+    "optuna",
+    "tqdm",
+    "matplotlib",
+    "seaborn",
+    "scikit-learn",
+]
