@@ -14,7 +14,7 @@ Parameter counts below apply to the exact designs specified here. They include b
 
 The MobileNetV2 count changes depending on which layers are unfrozen. Counts alone do not establish inference speed; measure it using the same hardware, batch size and procedure for each model.
 
-## 1. MLP baseline
+## 1. Multilayer Perceptron (MLP)
 
 | Layer | Configuration | Output shape | Parameters |
 |---|---|---|---:|
@@ -44,7 +44,7 @@ The MobileNetV2 count changes depending on which layers are unfrozen. Counts alo
 
 **Why choose it:** Local convolution filters can learn combinations of edges, rings and streaks while sharing weights across the image. Increasing the channel count allows later layers to combine earlier features; global average pooling keeps the classifier small. This model provides an efficiency comparison against both the MLP and deeper networks. Pooling could also discard useful fine detail, so its effect should be assessed experimentally.
 
-## 3. ResNet18 adapted for small images
+## 3. ResNet18
 
 Train this residual network from scratch. Use the ResNet18 arrangement of four stages with two basic residual blocks per stage, adapted with a 3 × 3 stride-1 stem and no initial max pool to preserve detail in the small input. Each block contains two 3 × 3 convolutions, each followed by batch normalisation; apply ReLU after the first normalisation and after adding the shortcut. Use bias-free convolutions and standard batch normalisation with trainable scale and offset plus moving mean and variance. The first block of stages 2–4 downsamples using stride 2 in its first convolution and uses a bias-free 1 × 1 stride-2 projection with batch normalisation on the shortcut. Other shortcuts are identities.
 
@@ -62,7 +62,7 @@ Train this residual network from scratch. Use the ResNet18 arrangement of four s
 
 **Why choose it:** Residual shortcuts give the network a way to learn changes to features across a deeper stack. This tests whether greater depth helps distinguish subtle patterns. Its large parameter count and inference cost relative to the compact CNN may outweigh any accuracy gain, so compare both measures. Implement it using Keras with the TensorFlow backend. The residual design is based on [He et al., Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385).
 
-## 4. ImageNet-pretrained MobileNetV2 with fine-tuning
+## 4. MobileNetV2 — ImageNet pretrained
 
 | Stage | Configuration | Output shape |
 |---|---|---|
